@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600;700;800&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --field-bg: 200 38% 6%;
+  --field-panel: 200 32% 9%;
+  --field-panel-strong: 200 30% 12%;
+  --field-line: 200 20% 22%;
+  --field-text: 200 15% 93%;
+  --field-text-muted: 200 12% 62%;
+
+  --field-red: 4 78% 58%;
+  --field-red-soft: 4 60% 30% / 0.16;
+  --field-teal: 187 55% 48%;
+  --field-teal-soft: 187 50% 30% / 0.16;
+  --field-gold: 38 88% 58%;
+  --field-gold-soft: 38 80% 35% / 0.16;
+  --field-emerald: 152 52% 48%;
+  --field-emerald-soft: 152 50% 30% / 0.16;
+  --field-violet: 262 58% 64%;
+  --field-violet-soft: 262 50% 35% / 0.16;
+  --field-blue: 205 70% 58%;
+  --field-blue-soft: 205 60% 35% / 0.16;
+
+  --background: 0 0% 100%;
+  --foreground: 0 0% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 3.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 3.9%;
+  --primary: 0 0% 9%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 0 0% 96.1%;
+  --secondary-foreground: 0 0% 9%;
+  --muted: 0 0% 96.1%;
+  --muted-foreground: 0 0% 45.1%;
+  --accent: 0 0% 96.1%;
+  --accent-foreground: 0 0% 9%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 89.8%;
+  --input: 0 0% 89.8%;
+  --ring: 0 0% 3.9%;
+  --radius: 0.625rem;
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-field-bg: hsl(var(--field-bg));
+  --color-field-panel: hsl(var(--field-panel));
+  --color-field-panel-strong: hsl(var(--field-panel-strong));
+  --color-field-line: hsl(var(--field-line));
+  --color-field-text: hsl(var(--field-text));
+  --color-field-text-muted: hsl(var(--field-text-muted));
+  --color-field-red: hsl(var(--field-red));
+  --color-field-red-soft: hsl(var(--field-red-soft));
+  --color-field-teal: hsl(var(--field-teal));
+  --color-field-teal-soft: hsl(var(--field-teal-soft));
+  --color-field-gold: hsl(var(--field-gold));
+  --color-field-gold-soft: hsl(var(--field-gold-soft));
+  --color-field-emerald: hsl(var(--field-emerald));
+  --color-field-emerald-soft: hsl(var(--field-emerald-soft));
+  --color-field-violet: hsl(var(--field-violet));
+  --color-field-violet-soft: hsl(var(--field-violet-soft));
+  --color-field-blue: hsl(var(--field-blue));
+  --color-field-blue-soft: hsl(var(--field-blue-soft));
+
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-sans: 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+  background-color: hsl(var(--field-bg));
+  background-image:
+    linear-gradient(hsl(var(--field-line) / 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--field-line) / 0.35) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+}
+
+.glow-red { box-shadow: 0 0 0 1px hsl(var(--field-red) / 0.3), 0 0 18px hsl(var(--field-red) / 0.18); }
+.glow-teal { box-shadow: 0 0 0 1px hsl(var(--field-teal) / 0.3), 0 0 18px hsl(var(--field-teal) / 0.18); }
+.glow-gold { box-shadow: 0 0 0 1px hsl(var(--field-gold) / 0.3), 0 0 18px hsl(var(--field-gold) / 0.18); }
+.glow-emerald { box-shadow: 0 0 0 1px hsl(var(--field-emerald) / 0.3), 0 0 18px hsl(var(--field-emerald) / 0.18); }
+.glow-violet { box-shadow: 0 0 0 1px hsl(var(--field-violet) / 0.3), 0 0 18px hsl(var(--field-violet) / 0.18); }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes stampIn {
+  0% { opacity: 0; transform: scale(1.06) rotate(-1deg); }
+  60% { opacity: 1; transform: scale(0.99) rotate(0.5deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 1px hsl(var(--field-red) / 0.3), 0 0 14px hsl(var(--field-red) / 0.15); }
+  50% { box-shadow: 0 0 0 1px hsl(var(--field-red) / 0.45), 0 0 22px hsl(var(--field-red) / 0.3); }
+}
+.animate-pulse-glow { animation: pulseGlow 2.4s ease-in-out infinite; }
+
+/* Hide Vite badge and error messages */
+body vite-error-overlay {
+  display: none;
+}

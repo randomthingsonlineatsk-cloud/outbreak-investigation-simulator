@@ -1,0 +1,161 @@
+import type { Scenario } from './oi-types'
+
+// ---------------------------------------------------------------------------
+// Second batch of scenarios — same fictional/teaching conventions as
+// oi-scenarios.ts. A few of these are deliberately trickier: the C. diff
+// cluster includes a second exposure (antibiotic use) with a genuinely high
+// odds ratio that is NOT the transmission vehicle — a real predisposing
+// host risk factor rather than a route of spread — to test careful reading
+// rather than picking the first large number.
+// ---------------------------------------------------------------------------
+
+export const SCENARIOS_EXTRA: Scenario[] = [
+  {
+    id: 'bayview-elementary', code: 'OI-9', name: 'Bayview Elementary Lunch Illness Cluster', setting: 'An elementary school cafeteria (380 students and staff)',
+    syndrome: 'Vomiting and diarrhea, onset 6–24 hours after lunch',
+    trueRoute: 'foodborne_point_source', trueCurveShape: 'point_source', trueVehicle: 'Egg salad sandwiches prepared several hours before service and left unrefrigerated',
+    incubationHoursMin: 6, incubationHoursMax: 24, baselineCasesPerPeriod: 1, periodLabel: 'month', observedCases: 44, populationAtRisk: 380,
+    epiCurve: [{ day: 0, cases: 3 }, { day: 1, cases: 30 }, { day: 2, cases: 9 }, { day: 3, cases: 2 }],
+    exposures: [
+      { exposure: 'Egg salad sandwich', casesExposed: 38, casesUnexposed: 4, controlsExposed: 15, controlsUnexposed: 45 },
+      { exposure: 'Chicken nuggets', casesExposed: 10, casesUnexposed: 32, controlsExposed: 35, controlsUnexposed: 25 },
+      { exposure: 'Milk carton', casesExposed: 35, casesUnexposed: 7, controlsExposed: 50, controlsUnexposed: 10 },
+      { exposure: 'Fruit cup', casesExposed: 20, casesUnexposed: 22, controlsExposed: 28, controlsUnexposed: 32 },
+      { exposure: 'Pizza (alternate lunch option)', casesExposed: 6, casesUnexposed: 36, controlsExposed: 30, controlsUnexposed: 30 },
+    ],
+    narrativeIntro: 'The school nurse reports dozens of students sent home with sudden vomiting within hours of the same lunch period.',
+    labFindingsNarrative: 'Stool samples confirm a bacterial toxin-producing pathogen. Kitchen records show the egg salad was prepared that morning and held at room temperature through the lunch rush.',
+    notifiableClass: 'routine',
+    cohortComparison: { exposedTotal: 160, exposedIll: 38, unexposedTotal: 220, unexposedIll: 6 },
+    caseCountByDefinition: [
+      { label: 'Very broad (any GI symptom, any student/staff, any timing)', count: 95 },
+      { label: 'Syndrome-based (matching symptoms + 6–24h timing + ate lunch that day)', count: 44 },
+      { label: 'Lab-confirmed only', count: 15 },
+    ],
+  },
+  {
+    id: 'harborlight-cruise', code: 'OI-10', name: 'Harborlight Cruise Illness Cluster', setting: 'A 7-day cruise voyage (2,600 passengers and crew)',
+    syndrome: 'Sudden vomiting and diarrhea, resolving within 24–48 hours',
+    trueRoute: 'person_to_person_propagated', trueCurveShape: 'propagated', trueVehicle: 'Person-to-person spread and contaminated surfaces in shared dining and cabin areas, amplified by close quarters — not the buffet alone',
+    incubationHoursMin: 12, incubationHoursMax: 48, baselineCasesPerPeriod: 0, periodLabel: 'week', observedCases: 210, populationAtRisk: 2600,
+    epiCurve: [{ day: 1, cases: 5 }, { day: 2, cases: 18 }, { day: 3, cases: 35 }, { day: 4, cases: 28 }, { day: 5, cases: 40 }, { day: 6, cases: 52 }, { day: 7, cases: 32 }],
+    exposures: [
+      { exposure: 'Shared a cabin with someone who later became ill', casesExposed: 60, casesUnexposed: 90, controlsExposed: 15, controlsUnexposed: 135 },
+      { exposure: 'Buffet self-service dining', casesExposed: 135, casesUnexposed: 15, controlsExposed: 100, controlsUnexposed: 50 },
+      { exposure: 'Regular hand sanitizer station use', casesExposed: 30, casesUnexposed: 120, controlsExposed: 90, controlsUnexposed: 60 },
+      { exposure: 'Casino attendance', casesExposed: 70, casesUnexposed: 80, controlsExposed: 68, controlsUnexposed: 82 },
+      { exposure: 'Pool deck use', casesExposed: 100, casesUnexposed: 50, controlsExposed: 95, controlsUnexposed: 55 },
+    ],
+    narrativeIntro: 'Cases of sudden gastrointestinal illness climb night over night aboard a cruise ship, despite the buffet being used by nearly every passenger aboard.',
+    labFindingsNarrative: 'A highly contagious virus known for surface persistence and rapid spread in close quarters is confirmed. Case counts drop sharply the day after shipwide isolation and enhanced sanitation measures begin.',
+    notifiableClass: 'urgent',
+    resourceConstrained: true,
+  },
+  {
+    id: 'riverside-shelter-tb', code: 'OI-11', name: 'Riverside Shelter Tuberculosis Cluster', setting: 'A homeless shelter with a poorly ventilated sleeping hall, over several months',
+    syndrome: 'Chronic cough lasting more than three weeks, weight loss, night sweats, and fever',
+    trueRoute: 'common_vehicle_continuous', trueCurveShape: 'continuous_common_source', trueVehicle: "Prolonged shared exposure to poor ventilation in the shelter's main sleeping hall, where an unrecognized infectious resident slept for several months",
+    incubationHoursMin: 336, incubationHoursMax: 4320, baselineCasesPerPeriod: 0, periodLabel: 'year', observedCases: 14, populationAtRisk: 120,
+    epiCurve: [{ day: 1, cases: 0 }, { day: 2, cases: 1 }, { day: 3, cases: 2 }, { day: 4, cases: 3 }, { day: 5, cases: 2 }, { day: 6, cases: 3 }, { day: 7, cases: 2 }, { day: 8, cases: 1 }, { day: 9, cases: 0 }],
+    exposures: [
+      { exposure: 'Slept in the main sleeping hall', casesExposed: 13, casesUnexposed: 1, controlsExposed: 25, controlsUnexposed: 55 },
+      { exposure: 'Assigned to ventilation zone B', casesExposed: 10, casesUnexposed: 4, controlsExposed: 20, controlsUnexposed: 60 },
+      { exposure: 'Regular kitchen work shifts', casesExposed: 3, casesUnexposed: 11, controlsExposed: 12, controlsUnexposed: 68 },
+      { exposure: 'Individual case-manager meetings (private office)', casesExposed: 8, casesUnexposed: 6, controlsExposed: 45, controlsUnexposed: 35 },
+      { exposure: 'Outdoor smoking area use', casesExposed: 6, casesUnexposed: 8, controlsExposed: 35, controlsUnexposed: 45 },
+    ],
+    narrativeIntro: 'Shelter staff notice several residents with persistent cough and weight loss over a period of months, longer and slower-building than a typical foodborne cluster.',
+    labFindingsNarrative: 'Sputum testing and chest imaging confirm active pulmonary tuberculosis in multiple residents. Genotyping suggests a shared recent transmission source rather than independent reactivation of old infections.',
+    notifiableClass: 'urgent',
+  },
+  {
+    id: 'cedar-ridge-tick', code: 'OI-12', name: 'Cedar Ridge Trail Tick-Borne Illness Cluster', setting: 'A network of hiking trails in a state park, over peak tick season',
+    syndrome: 'Fever, headache, rash, and joint pain, onset 3–30 days after hiking',
+    trueRoute: 'vector_borne', trueCurveShape: 'continuous_common_source', trueVehicle: 'Tick bites acquired on overgrown sections of the Ridge Loop Trail, where trail maintenance had lapsed',
+    incubationHoursMin: 72, incubationHoursMax: 720, baselineCasesPerPeriod: 1, periodLabel: 'month', observedCases: 33, populationAtRisk: 1500,
+    epiCurve: [{ day: 1, cases: 1 }, { day: 2, cases: 2 }, { day: 3, cases: 4 }, { day: 4, cases: 6 }, { day: 5, cases: 5 }, { day: 6, cases: 4 }, { day: 7, cases: 5 }, { day: 8, cases: 3 }, { day: 9, cases: 2 }, { day: 10, cases: 1 }],
+    exposures: [
+      { exposure: 'Hiked the Ridge Loop Trail', casesExposed: 28, casesUnexposed: 3, controlsExposed: 18, controlsUnexposed: 52 },
+      { exposure: 'Wore long pants tucked into socks', casesExposed: 6, casesUnexposed: 25, controlsExposed: 32, controlsUnexposed: 38 },
+      { exposure: 'Used tick repellent', casesExposed: 5, casesUnexposed: 26, controlsExposed: 30, controlsUnexposed: 40 },
+      { exposure: 'Hiked off-trail', casesExposed: 15, casesUnexposed: 16, controlsExposed: 14, controlsUnexposed: 56 },
+      { exposure: 'Checked for ticks after hiking', casesExposed: 8, casesUnexposed: 23, controlsExposed: 40, controlsUnexposed: 30 },
+    ],
+    narrativeIntro: 'Park visitors report fever and a spreading rash weeks after hiking, with cases trickling in throughout the season rather than clustering on one date.',
+    labFindingsNarrative: 'Serology confirms a tick-borne pathogen. A trail survey finds the Ridge Loop section significantly overgrown compared to other trails in the park.',
+    notifiableClass: 'routine',
+    doseResponse: [
+      { level: 'Never hiked Ridge Loop', ill: 5, total: 1180 },
+      { level: 'Hiked once', ill: 13, total: 200 },
+      { level: 'Hiked 2+ times', ill: 15, total: 120 },
+    ],
+  },
+  {
+    id: 'riverside-harm-reduction', code: 'OI-13', name: 'Riverside Community Bloodborne Virus Cluster', setting: 'A community with an active injection-drug-use network, over six months',
+    syndrome: 'Acute hepatitis-like illness — jaundice, fatigue, elevated liver enzymes — onset weeks to months after exposure',
+    trueRoute: 'common_vehicle_continuous', trueCurveShape: 'continuous_common_source', trueVehicle: "Shared injection equipment circulating within a specific social network, including a shared kit reused across multiple people",
+    incubationHoursMin: 336, incubationHoursMax: 2688, baselineCasesPerPeriod: 1, periodLabel: 'quarter', observedCases: 19, populationAtRisk: 200,
+    epiCurve: [{ day: 1, cases: 1 }, { day: 2, cases: 2 }, { day: 3, cases: 4 }, { day: 4, cases: 5 }, { day: 5, cases: 4 }, { day: 6, cases: 3 }],
+    exposures: [
+      { exposure: 'Shared injection equipment within the network', casesExposed: 17, casesUnexposed: 2, controlsExposed: 10, controlsUnexposed: 50 },
+      { exposure: 'Attended the community harm-reduction site', casesExposed: 15, casesUnexposed: 4, controlsExposed: 25, controlsUnexposed: 35 },
+      { exposure: 'Shared housing with a known case', casesExposed: 8, casesUnexposed: 11, controlsExposed: 12, controlsUnexposed: 48 },
+      { exposure: 'Tattoo from an unlicensed provider', casesExposed: 3, casesUnexposed: 16, controlsExposed: 4, controlsUnexposed: 56 },
+      { exposure: 'Recent blood transfusion', casesExposed: 1, casesUnexposed: 18, controlsExposed: 2, controlsUnexposed: 58 },
+    ],
+    narrativeIntro: 'A community health outreach team notices a cluster of hepatitis-like illness among people connected to the same social network over several months.',
+    labFindingsNarrative: 'Molecular sequencing links the viral strains across most cases, consistent with a shared, recent transmission source rather than separate unrelated infections. Modern screening makes transfusion-related transmission highly unlikely in this setting.',
+    notifiableClass: 'urgent',
+  },
+  {
+    id: 'flight-2247', code: 'OI-14', name: 'Flight 2247 Respiratory Illness Cluster', setting: 'An 11-hour long-haul commercial flight (260 passengers and crew)',
+    syndrome: 'Cough, fever, and sore throat, onset 1–4 days after the flight',
+    trueRoute: 'person_to_person_propagated', trueCurveShape: 'point_source', trueVehicle: 'Close-proximity contact with a symptomatic passenger seated in the same cabin section during the flight',
+    incubationHoursMin: 24, incubationHoursMax: 96, baselineCasesPerPeriod: 0, periodLabel: 'week', observedCases: 24, populationAtRisk: 260,
+    epiCurve: [{ day: 0, cases: 0 }, { day: 1, cases: 6 }, { day: 2, cases: 11 }, { day: 3, cases: 5 }, { day: 4, cases: 2 }, { day: 5, cases: 0 }],
+    exposures: [
+      { exposure: 'Seated within two rows of the index passenger', casesExposed: 20, casesUnexposed: 4, controlsExposed: 15, controlsUnexposed: 65 },
+      { exposure: 'Same cabin section (economy vs. business)', casesExposed: 22, casesUnexposed: 2, controlsExposed: 60, controlsUnexposed: 20 },
+      { exposure: 'Used the same lavatory', casesExposed: 14, casesUnexposed: 10, controlsExposed: 40, controlsUnexposed: 40 },
+      { exposure: 'Window vs. aisle seat', casesExposed: 10, casesUnexposed: 14, controlsExposed: 38, controlsUnexposed: 42 },
+      { exposure: 'Wore a mask during the flight', casesExposed: 3, casesUnexposed: 21, controlsExposed: 35, controlsUnexposed: 45 },
+    ],
+    narrativeIntro: 'Public health officials are notified of a cluster of respiratory illness among passengers who all took the same long-haul flight, with everyone symptomatic within a few days of landing.',
+    labFindingsNarrative: 'One passenger was confirmed symptomatic and coughing throughout the flight per crew reports. Genetic sequencing links the cases to a single strain, consistent with one shared exposure event rather than separate community sources.',
+    notifiableClass: 'routine',
+  },
+  {
+    id: 'willowbrook-shelter', code: 'OI-15', name: 'Willowbrook Emergency Shelter Illness Cluster', setting: 'An emergency shelter set up after a regional flood, housing displaced residents over three weeks',
+    syndrome: 'Watery diarrhea and cramping, onset 24–72 hours',
+    trueRoute: 'waterborne_point_source', trueCurveShape: 'point_source', trueVehicle: "A contaminated water tanker delivery used to refill the shelter's central water tank on day 2 of operations",
+    incubationHoursMin: 24, incubationHoursMax: 72, baselineCasesPerPeriod: 1, periodLabel: 'week', observedCases: 71, populationAtRisk: 540,
+    epiCurve: [{ day: 0, cases: 1 }, { day: 1, cases: 2 }, { day: 2, cases: 3 }, { day: 3, cases: 30 }, { day: 4, cases: 22 }, { day: 5, cases: 9 }, { day: 6, cases: 3 }, { day: 7, cases: 1 }],
+    exposures: [
+      { exposure: 'Drank water from the central tank', casesExposed: 63, casesUnexposed: 8, controlsExposed: 25, controlsUnexposed: 65 },
+      { exposure: 'Bottled water only', casesExposed: 5, casesUnexposed: 66, controlsExposed: 40, controlsUnexposed: 50 },
+      { exposure: 'Ate shelter-provided meals', casesExposed: 60, casesUnexposed: 11, controlsExposed: 75, controlsUnexposed: 15 },
+      { exposure: 'Used portable toilets', casesExposed: 55, casesUnexposed: 16, controlsExposed: 68, controlsUnexposed: 22 },
+      { exposure: 'Volunteered distributing water (without drinking from the tank)', casesExposed: 8, casesUnexposed: 63, controlsExposed: 10, controlsUnexposed: 80 },
+    ],
+    narrativeIntro: 'Cases of sudden diarrheal illness sweep through a flood-relief shelter within a day of each other, days after the shelter opened.',
+    labFindingsNarrative: 'Water testing finds fecal contamination in the central tank. Delivery records show a tanker refilled the tank on day 2 without the required disinfection step.',
+    notifiableClass: 'urgent',
+  },
+  {
+    id: 'northgate-cdiff', code: 'OI-16', name: 'Northgate Rehabilitation Ward C. difficile Cluster', setting: 'A hospital rehabilitation ward, over eight weeks',
+    syndrome: 'Severe watery diarrhea, typically following antibiotic use',
+    trueRoute: 'common_vehicle_continuous', trueCurveShape: 'continuous_common_source', trueVehicle: 'Reliance on alcohol-based hand sanitizer alone by staff, without soap-and-water handwashing, which does not eliminate C. difficile spores between patient contacts',
+    incubationHoursMin: 48, incubationHoursMax: 672, baselineCasesPerPeriod: 1, periodLabel: 'month', observedCases: 17, populationAtRisk: 90,
+    epiCurve: [{ day: 1, cases: 1 }, { day: 2, cases: 2 }, { day: 3, cases: 3 }, { day: 4, cases: 2 }, { day: 5, cases: 3 }, { day: 6, cases: 2 }, { day: 7, cases: 3 }, { day: 8, cases: 1 }],
+    exposures: [
+      { exposure: 'Staff relied on hand sanitizer only (no soap-and-water washing)', casesExposed: 14, casesUnexposed: 3, controlsExposed: 25, controlsUnexposed: 45 },
+      { exposure: 'Recent broad-spectrum antibiotic use', casesExposed: 15, casesUnexposed: 2, controlsExposed: 35, controlsUnexposed: 35 },
+      { exposure: 'Shared a commode or mobility equipment', casesExposed: 11, casesUnexposed: 6, controlsExposed: 20, controlsUnexposed: 50 },
+      { exposure: 'Roomed near a previously affected patient', casesExposed: 9, casesUnexposed: 8, controlsExposed: 22, controlsUnexposed: 48 },
+      { exposure: 'Private room with dedicated equipment', casesExposed: 2, casesUnexposed: 15, controlsExposed: 35, controlsUnexposed: 35 },
+    ],
+    narrativeIntro: 'Infection control notices a cluster of severe diarrheal illness among rehabilitation ward patients recovering from recent antibiotic courses.',
+    labFindingsNarrative: 'Toxin testing confirms C. difficile in all cases. Antibiotic use is common across affected patients — a well-established predisposing risk factor — but the investigation still needs to explain how the organism actually spread between them.',
+    notifiableClass: 'routine',
+  },
+]
